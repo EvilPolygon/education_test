@@ -8,8 +8,8 @@ export const NavBar = () => {
 
     const auth = useContext(AuthContext)
 
-    const logoutHandler = Event => {
-        Event.preventDefault()
+    const logoutHandler = event => {
+        event.preventDefault()
         auth.logout()
         history.pushState('/')
     }
