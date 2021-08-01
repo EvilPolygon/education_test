@@ -1,8 +1,37 @@
+import { STATES } from 'mongoose'
+import {useContext, useEffect, useState} from 'react'
+import {useHttp} from '../hooks/http.hook'
+import {AuthContext} from '../context/auth.context'
+import { LinksList } from '../components/LinksList'
 
 export const LinksPage = () => {
+
+    const [links, useLinks] = useState([])
+    const {loading, request} = useHttp()
+    const {token} = useContext(AuthContext)
+
+    const fetchLinks = useCallback( async () => {
+        try {
+            const fetched = await request('/api/link', 'GET', null, {
+                Authorization: `Bearer ${token}`
+            })
+            setLinks(fetched)
+        } catch (e) {
+            
+        }
+    }, [token, request])
+
+    useEffect( () => {
+        fetchLinks()
+    }, [fetchLinks])
+
+    if(loading){
+        return <Loader />
+    }
+
     return(
-        <div>
-            <h1> Links page</h1>
-        </div>
+        <>
+            {!loading && <LinksList links = {links} />}
+        </>
     )
 }

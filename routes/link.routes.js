@@ -1,4 +1,4 @@
-const {Router} = require('express')
+const {Router, json} = require('express')
 const Link = require('../models/Link')
 const router = Router()
 const auth = require('../middleware/auth.middleware')
@@ -31,7 +31,8 @@ router.post('/generate', auth, async (req, res) => {
 
     }
     catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        console.log(e.message)
+        res.status(500).json({message: `Что-то пошло не так, попробуйте снова` })
     }
 })
 
@@ -41,17 +42,19 @@ router.get('/', auth,  async (req, res) => {
         res.json(links)
     }
     catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        res.status(500).json({message: 'Ошибка в link.routes в первом get'})
     }
 })
 
 router.get('/:id', auth,  async (req, res) => {
+    
+    console.log(JSON.stringify(req.params))
     try {
-        const links = await Link.findById(req.params.id)
-        res.json(links)
+        const link = await Link.findById(req.params.id)        
+        res.json(link)
     }
     catch (e) {
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        res.status(500).json({message: 'Ошибка в link.routes во втором get'})
     }
 })
 
