@@ -48,7 +48,6 @@ router.get('/', auth,  async (req, res) => {
 
 router.get('/:id', auth,  async (req, res) => {
     
-    console.log(JSON.stringify(req.params))
     try {
         const link = await Link.findById(req.params.id)        
         res.json(link)

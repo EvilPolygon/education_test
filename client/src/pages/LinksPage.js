@@ -1,12 +1,12 @@
-import { STATES } from 'mongoose'
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState, useCallback} from 'react'
 import {useHttp} from '../hooks/http.hook'
 import {AuthContext} from '../context/auth.context'
 import { LinksList } from '../components/LinksList'
+import {Loader} from '../components/Loader'
 
 export const LinksPage = () => {
 
-    const [links, useLinks] = useState([])
+    const [links, setLinks] = useState([])
     const {loading, request} = useHttp()
     const {token} = useContext(AuthContext)
 
